@@ -142,25 +142,6 @@ map <Leader>k <Plug>(easymotion-k)
 map <Leader>n <Plug>(easymotion-n)
 map <Leader>N <Plug>(easymotion-N)
 
-" Vim-session:
-" let g:session_directory = '~/.config/nvim/sessions'
-" Always autosave
-" let g:session_autosave = 'yes'
-" Never autoload
-" let g:session_autoload = 'no'
-" " Command shortcuts
-" command OS OpenSession
-" command -nargs=1 SS SaveSession <args>
-
-" " Taglist
-" " Do not resize window
-" let Tlist_Inc_Winwidth=0
-" " Open on right side
-" let Tlist_Use_Right_Window=1
-" " Custom commands
-" command TL TlistToggle
-" command Tl TlistToggle
-
 " Tagbar
 " Custom command
 command TB TagbarToggle
