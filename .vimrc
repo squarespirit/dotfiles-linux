@@ -107,7 +107,7 @@ set nofoldenable
 command E Explore
 
 " Turn off highlighting with \
-nnoremap \ :noh<CR>
+nnoremap \ :nohlsearch<CR>
 
 " Plugins =============================
 
