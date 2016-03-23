@@ -51,7 +51,7 @@ set colorcolumn=80
 highlight ColorColumn ctermbg=7
 
 " F4 to toggle line wrapping
-map <F4> :set wrap!<CR>
+map <F4> :set wrap!<CR>:set wrap?<CR>
 
 " Clipboard key remappings
 nnoremap <Leader>y "+y
