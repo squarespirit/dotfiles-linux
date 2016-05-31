@@ -12,10 +12,10 @@ function fish_prompt
     echo
     set_color blue
     echo -n (whoami) ""
-    set_color $fish_color_cwd
+    set_color green
     echo -n (prompt_pwd) ""
-    set_color red
+    set_color brown
     echo \($git_branch\)
-    set_color $fish_color_normal
+    set_color normal
     echo -n "\$ "
 end
