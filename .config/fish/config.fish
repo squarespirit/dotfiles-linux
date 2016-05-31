@@ -7,13 +7,16 @@ alias reload_config ". $CONFIG_FILE"
 
 # Fish prompt
 function fish_prompt
+    # From http://stackoverflow.com/a/24582165
     set -l git_branch (git branch ^/dev/null | sed -n '/\* /s///p')
+    # From http://stackoverflow.com/a/2580228
+    set -l working_dir (pwd | sed -e 's|/private||' -e "s|^$HOME|~|")
 
     echo
     set_color blue
     echo -n (whoami) ""
     set_color green
-    echo -n (prompt_pwd) ""
+    echo -n $working_dir ""
     set_color brown
     echo \($git_branch\)
     set_color normal
