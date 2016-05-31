@@ -5,3 +5,9 @@
 !.bashrc
 !.bash_aliases
 !.vimrc
+
+!.config/
+.config/*
+!.config/fish/
+.config/fish/*
+!.config/fish/config.fish
