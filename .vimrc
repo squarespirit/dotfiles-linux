@@ -1,5 +1,8 @@
-" Initialize plugins with vim-plug
-call plug#begin()
+" vim:foldmethod=marker:foldlevel=0
+
+" Plugin initialization and mapleader {{{
+ 
+call plug#begin()               " Initialize plugins with vim-plug 
 
 " Plugins
 if !has('nvim')
@@ -19,44 +22,62 @@ Plug 'rking/ag.vim'
 " Plug 'benekastah/neomake'
 " Plug 'Valloric/YouCompleteMe'
 
-" Finish plugin initialization
-call plug#end()
+call plug#end()                 " Finish plugin initialization
 
-" Set leader to Space
-let mapleader = "\<Space>"
+let mapleader = "\<Space>"      " Set leader to Space
 
-" Show line numbers and ruler
-set number ruler
 
-" Expand tabs to spaces and use indent = 4 spaces
-set expandtab tabstop=4 shiftwidth=4	
+" }}} ====================================================================
+" Moving around {{{
 
-" Indent wrapped lines same amount as first line
-set breakindent
+" Use j/k for screen lines, and gj/gk for actual lines (swap their behavior)
+nnoremap j gj
+vnoremap j gj
+nnoremap k gk
+vnoremap k gk
+nnoremap gj j
+vnoremap gj j
+nnoremap gk k
+vnoremap gk k
 
-" Indent case: the same as switch in switch/case block
-set cino=:0
 
-" Hides buffers instead of closing them
-set hidden
+" }}} ====================================================================
+" Indentation, spacing, etc. {{{ 
+
+set expandtab           " Expand tabs to spaces
+set tabstop=4           " Hard tabs are 4 spaces
+set shiftwidth=4	    " Autoindent in multiples of 4 spaces
+set breakindent         " Indent wrapped lines the same as the first line 
+set cino=:0             " Indent 'case' the same as 'switch' in switch/case
+set nojoinspaces        " Only one space after .!? when formatting paragraphs
 
 " http://vim.wikia.com/wiki/Word_wrap_without_line_breaks
-set wrap
 set linebreak
 set nolist
 set textwidth=0
 set wrapmargin=0
 
-" 80 character color-column
-set colorcolumn=80
+" F4 to toggle line wrapping
+nnoremap <F4> :set wrap!<CR>:set wrap?<CR> 
+
+
+" }}} ====================================================================
+" Looks {{{
+
+syntax on               " Syntax highlighting on
+set number              " Show line numbers 
+set ruler               " Show ruler in status line 
+set cursorline          " Underline current line
+set colorcolumn=81      " Color-column just beyond 80 char
 highlight ColorColumn ctermbg=7
 
-" F4 to toggle line wrapping
-map <F4> :set wrap!<CR>:set wrap?<CR>
+
+" }}} ====================================================================
+" Clipboard {{{ 
 
 " Clipboard key remappings
 nnoremap <Leader>y "+y
-nnoremap <leader>y "+y
+nnoremap <leader>Y "+Y
 vnoremap <Leader>y "+y
 nnoremap <Leader>d "+d
 nnoremap <Leader>D "+D
@@ -70,12 +91,37 @@ vmap <Leader>p "+p
 vmap <Leader>P "+P
 
 " Autoindent on paste
-nnoremap p p=`]
-nnoremap P P=`]
+" nnoremap p p=`]
+" nnoremap P P=`]
 
-" Open new windows to right and bottom
+
+" }}} ====================================================================
+" Searching {{{
+
+set ignorecase          " Treat all-lowercase searches as case-insensitive
+set smartcase           " If any uppercase letters, treat as case-sensitive
+
+" Turn off search highlighting with \
+nnoremap \ :nohlsearch<CR>
+
+
+" }}} ====================================================================
+" Folding {{{ 
+
+set foldmethod=indent   " Fold based on indentation
+set foldnestmax=10      " Maximum fold depth
+set foldlevelstart=10   " Starting depth of folds
+
+" Keymap for toggling folds
+nnoremap <Leader>z za
+
+
+" }}} ====================================================================
+" Windows, buffers, etc. {{{
+
+set hidden              " Hides buffers instead of closing them 
+set splitright          " Open new windows to right and bottom 
 set splitbelow
-set splitright
 
 " Moving between windows
 noremap <C-h> <C-w>h
@@ -83,48 +129,37 @@ noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
 
-" No swap files
-set noswapfile
 
-" Syntax highlighting on
-syntax on
+" }}} ====================================================================
+" Miscellaneous {{{
 
-" All-lowercase search = case-insensitive
-" Any uppercase letters = case-sensitive
-set ignorecase
-set smartcase
+set noswapfile              " No swapfiles 
+let g:netrw_gx="<cWORD>"    " Use WORDs when opening URLs 
+command E Explore           " File explore with just E 
 
-" Use WORDs when opening URLs.
-" This avoids cutting off URL params (after '?') and anchors (after '#'). 
-" From http://vi.stackexchange.com/q/2801/1631
-let g:netrw_gx="<cWORD>"
 
-" Code folding based on indentation
-set foldmethod=indent
-" Do not fold at first
-set nofoldenable
+" }}} ====================================================================
+" NerdTree {{{
 
-" File explorer
-command E Explore
+command NT NERDTreeToggle   " Custom command
 
-" Turn off highlighting with \
-nnoremap \ :nohlsearch<CR>
+" Custom keybind
+nnoremap <silent> <F2> :NERDTreeToggle<CR>
 
-" Plugins =============================
-
-" NerdTree
-" Open with :NT
-command NT NERDTreeToggle
 " Do not close NerdTree after opening file
 let NERDTreeQuitOnOpen = 0 
 
-" CtrlP
-" use Vim's working directory as CtrlP's working directory
-let g:ctrlp_working_path_mode = 0
-" Open CtrlP in buffer mode with ^B
-nnoremap <C-B> :CtrlPBuffer<CR>
 
-" Easymotion
+" }}} ====================================================================
+" CtrlP {{{
+
+" Use Vim's working directory as CtrlP's working directory
+let g:ctrlp_working_path_mode = 0
+
+
+" }}} ====================================================================
+" EasyMotion {{{ 
+
 " Plugs:
 map <Leader>f <Plug>(easymotion-f)
 map <Leader>F <Plug>(easymotion-F)
@@ -143,11 +178,21 @@ map <Leader>k <Plug>(easymotion-k)
 map <Leader>n <Plug>(easymotion-n)
 map <Leader>N <Plug>(easymotion-N)
 
-" Tagbar
-" Custom command
-command TB TagbarToggle
+
+" }}} ====================================================================
+" Tagbar {{{
+
+command TB TagbarToggle     " Custom commands
 command Tb TagbarToggle
 
-" Improved paragraph motion
-" Skip folds
-let g:ip_skipfold=1
+" Custom keymap
+nnoremap <silent> <F10> :TagbarToggle<CR>
+
+let g:tagbar_autoclose = 1      " Autoclose after open
+let g:tagbar_sort = 0           " Sort tags by order in file (not by alpha)
+
+" }}} ====================================================================
+" Improved paragraph motion {{{
+let g:ip_skipfold=1         " Skip folds
+
+" }}}
