@@ -42,7 +42,7 @@ function fish_right_prompt
             set_color magenta
             printf " (%s*)" $git_branch
         else
-            set_color cyan
+            set_color 999 # light gray
             printf " (%s)" $git_branch
         end
 
