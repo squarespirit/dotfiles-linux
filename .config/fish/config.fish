@@ -33,9 +33,10 @@ function fish_right_prompt
     set_color green
     printf "(%s)" $working_dir
      
-    # From https://geraldkaszuba.com/tweaking-fish-shell/
-    set -l git_branch (git rev-parse --abbrev-ref HEAD ^/dev/null) 
+    # From http://stackoverflow.com/a/24582165
+    set -l git_branch (git branch ^/dev/null | sed -n '/\* /s///p')
     if test $status -eq 0
+        # From https://geraldkaszuba.com/tweaking-fish-shell/
         set -l git_dirty_count (git status --porcelain | wc -l | sed "s/ //g")
 
         if test $git_dirty_count -gt 0
